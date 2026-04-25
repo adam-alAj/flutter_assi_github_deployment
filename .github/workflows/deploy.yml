@@ -13,13 +13,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout repository
+      - name: 📥 Checkout
         uses: actions/checkout@v3
 
       - name: 🧰 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'stable'
+          channel: stable
+
+      - name: 🔍 Flutter version
+        run: flutter --version
 
       - name: 📦 Install dependencies
         run: flutter pub get
@@ -28,9 +31,9 @@ jobs:
         run: flutter config --enable-web
 
       - name: 🏗 Build web
-        run: flutter build web --release
+        run: flutter build web --release --base-href "/flutter_assi_github_deployment/"
 
-      - name: 🚀 Deploy to GitHub Pages
+      - name: 🚀 Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
